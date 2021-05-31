@@ -1,4 +1,10 @@
 package automateIt.pages;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class BasePage {
+public abstract class BasePage extends PageActions{
+
+    BasePage(RemoteWebDriver driver){
+       super(driver);
+    }
+
 }

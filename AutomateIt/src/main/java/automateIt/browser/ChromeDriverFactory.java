@@ -11,11 +11,13 @@ public class ChromeDriverFactory  {
     RemoteWebDriver driver;
 
     public  RemoteWebDriver getDriver(Boolean remoteExecution, String hubURL) throws MalformedURLException {
+        ChromeOptions chromeOptions=setChromeOptions();
             if(remoteExecution){
-                driver= new RemoteWebDriver(new URL(hubURL),setChromeOptions());
+                driver= new RemoteWebDriver(new URL(hubURL),chromeOptions);
             }else{
                 WebDriverManager.chromedriver().setup();
-                driver= new ChromeDriver();
+                driver= new ChromeDriver(chromeOptions);
+                driver.manage().window().maximize();
             }
       //  driver.get(appURL);
         return  driver;
@@ -25,8 +27,8 @@ public class ChromeDriverFactory  {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--lang=en-GB");
         options.addArguments("--disable-notifications");
-        options.addArguments("start-maximized");
-        options.addArguments("incognito");
+        options.addArguments("--start-maximized");
+        options.addArguments("--incognito");
         return options;
     }
 }

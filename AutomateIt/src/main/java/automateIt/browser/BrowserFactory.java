@@ -15,7 +15,7 @@ public class BrowserFactory {
     RemoteWebDriver driver;
 
 
-     public RemoteWebDriver createBrowserInstance(String browser,Boolean remoteExecution, String hubURL){
+     public RemoteWebDriver createBrowserInstance(String browser,boolean remoteExecution, String hubURL){
         try {
         if(browser.equalsIgnoreCase("chrome")) {
             ChromeDriverFactory chromeObject=new ChromeDriverFactory();
