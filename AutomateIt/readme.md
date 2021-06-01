@@ -18,6 +18,6 @@ You ca start with one master and one worker node.
 
 All the yaml manifest files can be found under project cluster-setup directory.
 
->[1] K8S Deployment is used for setting up Selenium hub<br>
->[2] K8S ReplicationController is used for setting up  chrome/firefox node
->[3] K8S Service of type NodePort is used to acccess Selenium Grid outside of cluster
+>[1] K8S Deployment is used for setting up Selenium hub.<br>
+>[2] K8S ReplicationController is used for setting up  chrome/firefox node.<br>
+>[3] K8S Service of type NodePort is used to acccess Selenium Grid outside of cluster.<br>
