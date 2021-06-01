@@ -1,11 +1,11 @@
 ## **AutomateIt**
 
 Test Automation Framework for Web applications using following technologies.
-[1] Selenium 3
-[2] Java 8
-[3] TestNG
-[4] ExtentReport
-[5] Apache Log4J
+[1] Selenium 3<br>
+[2] Java 8<br>
+[3] TestNG<br>
+[4] ExtentReport<br>
+[5] Apache Log4J<br>
 
 **Description**<br>
 Supports execution of tests on Remote Grid Setup. Includes yaml manifest files for  Selenium Grid 3 setup on kubernetes cluster.
