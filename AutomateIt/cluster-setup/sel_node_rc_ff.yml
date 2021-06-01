@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: selenium-rep-ff
+spec:
+  replicas: 1
+  selector:
+    app: selenium-rep-ff
+  template:
+    metadata:
+      name: selenium-rep-ff
+      labels:
+        app: selenium-rep-ff
+    spec:
+      containers:
+        - name: node-ff
+          image: selenium/node-firefox-debug:3.141.59-20210422
+          ports:
+            - containerPort: 5555
+          env:
+            - name: HUB_HOST
+              value: "selenium-srv"
+            - name: HUB_PORT
+              value: "4444"

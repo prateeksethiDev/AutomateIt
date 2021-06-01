@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: selenium-rep-chrome
+spec:
+  replicas: 1
+  selector:
+    app: selenium-rep-chrome
+  template:
+    metadata:
+      name: selenium-rep-chrome
+      labels:
+        app: selenium-rep-chrome
+    spec:
+      containers:
+        - name: node-ff
+          image: selenium/node-chrome-debug:3.141.59-20210422
+          ports:
+            - containerPort: 5556
+          env:
+            - name: HUB_HOST
+              value: "selenium-srv"
+            - name: HUB_PORT
+              value: "4444"

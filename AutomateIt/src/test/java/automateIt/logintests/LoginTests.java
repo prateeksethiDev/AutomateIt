@@ -20,12 +20,10 @@ public class LoginTests extends BaseTest {
         accountPage=new AccountPage(driver);
     }
 
-    @Test()
-    public void login() throws InterruptedException {
+    @Test(description = "To verify user is able to login into application with valid credentials")
+    public void testLogin() throws InterruptedException {
         loginPage.loadAppURL(appURL);
         loginPage.login("Admin","admin123");
         accountPage.verifyLoginIsSuccessful();
-
     }
-
 }

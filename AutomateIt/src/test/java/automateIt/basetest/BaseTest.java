@@ -24,7 +24,7 @@ public class BaseTest {
 
     @AfterSuite(alwaysRun = true)
     public void tearDownSetup(){
-        DriverFactory.getInstance().getDriverFromThreadLocal().close();
+        DriverFactory.getInstance().getDriverFromThreadLocal().quit();
     }
 
 }
