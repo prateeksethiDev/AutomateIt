@@ -21,8 +21,8 @@ public class LoginPage extends BasePage {
         driver.get(appURL);
     }
     public void login(String email, String password){
-        sendKeysToText(locateElement(email_address_txt),"email_address_txt",email);
-        sendKeysToText(locateElement(password_txt),"password_txt",password);
-        clickOnWebElement(locateElement(signIn_btn),"sign_in_btn");
+        sendKeysToText(email_address_txt,"email_address_txt",email);
+        sendKeysToText(password_txt,"password_txt",password);
+        clickOnWebElement(signIn_btn,"sign_in_btn");
     }
 }

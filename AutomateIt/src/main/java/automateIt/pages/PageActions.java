@@ -36,11 +36,12 @@ public class PageActions {
         }
     }
 
-    protected void sendKeysToText(WebElement element, String fieldName, String valueToBeSent) {
-
-        try {
-            wait.until(ExpectedConditions.visibilityOf(element));
-            element.sendKeys(valueToBeSent);
+    protected void sendKeysToText(By locator, String fieldName, String valueToBeSent) {
+        try{
+            wait.until(
+                (d)->
+                    d.findElement(locator).isDisplayed());
+            driver.findElement(locator).sendKeys(valueToBeSent);
             //log success message in extent report
             ExtentFactory.getInstance().getExtent().log(Status.PASS, fieldName+" entered value as "+valueToBeSent+" is successful");
         }catch(Exception e) {
@@ -49,9 +50,14 @@ public class PageActions {
         }
     }
 
-    protected void clickOnWebElement(WebElement element,String fieldName) {
+    protected void clickOnWebElement(By locator,String fieldName) {
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(element));
+
+            WebElement element=wait.until(
+                    (d)-> {
+                        List<WebElement>list=d.findElements(locator);
+                        return (list.size()>0)?list.get(0):null;
+                    });
             element.click();
             //log success message in extent report
             ExtentFactory.getInstance().getExtent().log(Status.PASS, fieldName+" click is successful");
@@ -114,9 +120,14 @@ public class PageActions {
         return flag;
     }
 
-    protected void selectDropDownByVisibleText(WebElement element,String fieldName,String visibleText) {
+    protected void selectDropDownByVisibleText(By locator,String fieldName,String visibleText) {
 
         try {
+            WebElement element=wait.until(
+                    (d)-> {
+                        List<WebElement>list=d.findElements(locator);
+                        return (list.size()>0)?list.get(0):null;
+                    });
             Select s = new Select(element);
             s.selectByVisibleText(visibleText);
             //log success message in extent report
