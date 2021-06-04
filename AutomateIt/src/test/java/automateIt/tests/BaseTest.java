@@ -1,4 +1,4 @@
-package automateIt.basetest;
+package automateIt.tests;
 
 import automateIt.browser.BrowserFactory;
 import automateIt.browser.DriverFactory;
@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeSuite;
 
 public class BaseTest {
 
-    protected RemoteWebDriver driver;
+    static protected RemoteWebDriver driver;
 
     @BeforeSuite(alwaysRun = true)
     public void launchSetup(){

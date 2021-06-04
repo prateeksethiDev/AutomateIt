@@ -1,24 +1,37 @@
 package automateIt.utils;
 
-import com.aventstack.extentreports.*;
-import com.aventstack.extentreports.reporter.*;
-import com.aventstack.extentreports.reporter.configuration.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import java.text.*;
-import java.util.*;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class ExtentReportNG {
     public static ExtentReports extent;
 
     public static ExtentReports setupReports() throws Exception {
-       String url=ReadPropertyFile.getProperty("appURL");
-       String browser=ReadPropertyFile.getProperty("browser");
+    	
+    	boolean ispurgeAllPreviousReportsTillYesterday=Boolean.parseBoolean(ReadPropertyFile.getProperty("purgeAllPreviousReportsTillYesterday"));
+    	purgePreviousReports(ispurgeAllPreviousReportsTillYesterday);
+    	String url=ReadPropertyFile.getProperty("appURL");
+    	String browser=ReadPropertyFile.getProperty("browser");
         String isRemoteExecutionOn=ReadPropertyFile.getProperty("remote_execution_mode");
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy HH-mm-ss");
         Date date = new Date();
         String actualdate=format.format(date);
         String reportPath=System.getProperty("user.dir")+"/Reports/ExecutionReport_"+actualdate+".html";
         ExtentSparkReporter sparkReport = new ExtentSparkReporter(reportPath);
+        
         extent = new ExtentReports();
         extent.attachReporter(sparkReport);
 
@@ -31,5 +44,36 @@ public class ExtentReportNG {
         extent.setSystemInfo("Execeuted on User:", System.getProperty("user.dir"));
         extent.setSystemInfo("Test Executed on Remote: ",isRemoteExecutionOn);
         return extent;
+    }
+    
+    public static void purgePreviousReports(boolean ispurgeAllPreviousReportsTillYesterday) {
+    	if(ispurgeAllPreviousReportsTillYesterday) {
+    	String dir = System.getProperty("user.dir")+"/Reports/";
+
+        // cutoff date:
+        Instant today = Instant.now().minus(1, ChronoUnit.DAYS);
+
+        // find with filter
+        try {
+			List<Path > listPaths=Files.find(Paths.get(dir), Integer.MAX_VALUE,
+			    (p, a) -> {
+			        try {
+			            return Files.isRegularFile(p)
+			                && Files.getLastModifiedTime(p).toInstant().isBefore(today);
+			        }
+			        catch(IOException e) {
+			            throw new RuntimeException(e);
+			        }
+			    })
+			    .collect(Collectors.toList());
+			for(Path path:listPaths) {
+				path.toFile().delete();
+				
+			}
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+    	}
     }
 }

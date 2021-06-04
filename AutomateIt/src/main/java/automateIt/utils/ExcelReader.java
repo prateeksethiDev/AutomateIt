@@ -1,4 +1,4 @@
-package automateIt.fixtures.utilities;
+package automateIt.utils;
 
 
 import org.apache.poi.*;

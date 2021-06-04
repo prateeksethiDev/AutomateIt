@@ -67,8 +67,13 @@ public class PageActions {
         }
     }
 
-    protected void clearText(WebElement element,String fieldName) {
+    protected void clearText(By locator,String fieldName) {
         try {
+        	WebElement element=wait.until(
+                    (d)-> {
+                        List<WebElement>list=d.findElements(locator);
+                        return (list.size()>0)?list.get(0):null;
+                    });
             element.clear();
             //log success message in extent report
             ExtentFactory.getInstance().getExtent().log(Status.PASS, fieldName+" clear is successful");

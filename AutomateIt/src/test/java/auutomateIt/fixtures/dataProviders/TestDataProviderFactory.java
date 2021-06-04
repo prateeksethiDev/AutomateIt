@@ -1,17 +1,20 @@
-package automateIt.fixtures.dataProviders;
+package auutomateIt.fixtures.dataProviders;
 
-import automateIt.fixtures.beans.AdminUserBean;
-import automateIt.fixtures.utilities.*;
+import auutomateIt.fixtures.beans.AdminUserBean;
 import org.testng.annotations.*;
+
+import automateIt.utils.ExcelReader;
+
 import java.util.*;
 
 public class TestDataProviderFactory {
 
     ExcelReader obj = new ExcelReader();
 
-    @DataProvider(name = "getAdminUserDataProvider")
-    public Iterator<AdminUserBean> getAdminUserDataProvider(){
-        List<Map<String, String>> listOfData= obj.readDataFromExcel(System.getProperty("user.dir")+"resources/testData/orangeHRMData.xlsx","AdminUserBean");
+    @DataProvider(name = "userDataProvider")
+    public Iterator<AdminUserBean> userDataProvider(){
+        List<Map<String, String>> listOfData= obj.
+        		readDataFromExcel(System.getProperty("user.dir")+"/resources/testData/orangeHRMData.xlsx","AdminUserBean");
         Iterator<Map<String, String>> itr=listOfData.iterator();
         ArrayList<AdminUserBean> listOfBean = new ArrayList<AdminUserBean>();
        while(itr.hasNext()){
@@ -26,6 +29,4 @@ public class TestDataProviderFactory {
        }
        return listOfBean.iterator();
     }
-
 }
-

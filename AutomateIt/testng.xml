@@ -8,9 +8,9 @@
 
     <test name="UI_Test" preserve-order="true">
         <classes>
-            <class name="automateIt.logintests.LoginTests" />
+            <class name="automateIt.tests.LoginTests" />
+            <class name="automateIt.tests.UserCreationTests" />           
         </classes>
     </test>
-
-
+    
 </suite>
