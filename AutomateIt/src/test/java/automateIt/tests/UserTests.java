@@ -3,13 +3,11 @@ package automateIt.tests;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
-
 import java.util.logging.Logger;
-
 import automateIt.pages.AccountPage;
 import automateIt.pages.AdminPage;
 import auutomateIt.fixtures.beans.AdminUserBean;
-import auutomateIt.fixtures.dataProviders.TestDataProviderFactory;
+import auutomateIt.fixtures.dataProviders.UserDataProvider;
 
 
 
@@ -25,7 +23,7 @@ public class UserTests extends BaseTest{
     }
 	
 	 @Test(description = "To verify user can be created from UI",dataProvider = "createUserDataProvider",
-			 dataProviderClass = TestDataProviderFactory.class)
+			 dataProviderClass = UserDataProvider.class)
 	    public void testcreateUser(AdminUserBean adminUserBean) {
 		 log.info(adminUserBean.toString());
 	        accountPage.clickOnAdminTab();
@@ -41,7 +39,7 @@ public class UserTests extends BaseTest{
 	 
 	 
 	 @Test(description = "To verify user can be searched from UI",dataProvider = "searchUserDataProvider",
-			 dataProviderClass = TestDataProviderFactory.class)
+			 dataProviderClass = UserDataProvider.class)
 	    public void testSearchUser(AdminUserBean adminUserBean) {
 		 log.info(adminUserBean.toString());
 	        accountPage.clickOnAdminTab();

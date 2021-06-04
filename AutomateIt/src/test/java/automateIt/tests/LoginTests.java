@@ -1,10 +1,12 @@
 package automateIt.tests;
 
-import automateIt.pages.LoginPage;
-import automateIt.pages.AccountPage;
-import automateIt.utils.ReadPropertyFile;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import automateIt.pages.AccountPage;
+import automateIt.pages.LoginPage;
+import automateIt.utils.ReadPropertyFile;
+import auutomateIt.fixtures.beans.LoginUserBean;
+import auutomateIt.fixtures.dataProviders.LoginDataProvider;
 
 
 public class LoginTests extends BaseTest {
@@ -19,10 +21,11 @@ public class LoginTests extends BaseTest {
         accountPage=new AccountPage(driver);
     }
 
-    @Test(description = "To verify user is able to login into application with valid credentials")
-    public void testLogin() {
+    @Test(description = "To verify user is able to login into application with valid credentials",dataProvider = "validUserLoginDataProvider",
+			 dataProviderClass = LoginDataProvider.class)
+    public void testLogin(LoginUserBean loginUserBean) {
         loginPage.loadAppURL(appURL);
-        loginPage.login("Admin","admin123");
+        loginPage.login(loginUserBean.getUsername(),loginUserBean.getPassword());
         accountPage.verifyLoginIsSuccessful();
     }
 }

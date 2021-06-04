@@ -9,7 +9,7 @@
     <test name="UI_Test" preserve-order="true">
         <classes>
             <class name="automateIt.tests.LoginTests" />
-            <class name="automateIt.tests.UserCreationTests" />           
+            <class name="automateIt.tests.UserTests" />           
         </classes>
     </test>
     

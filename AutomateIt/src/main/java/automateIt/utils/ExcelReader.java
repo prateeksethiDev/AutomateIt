@@ -2,6 +2,8 @@ package automateIt.utils;
 
 
 import org.apache.poi.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;
 
 import java.io.*;
@@ -35,32 +37,75 @@ public class ExcelReader {
         return workbook.getSheet(sheetName);
     }
 
-    public List<Map<String,String>> readDataFromExcel(String excelFilePath,String sheetName){
+    public Map<String,List<Map<String,String>>> readDataFromExcel(String excelFilePath,String sheetName){
         workbook=getWorkBookInstance(excelFilePath);
         worksSheet=getSheetByName(sheetName);
-
-        int totalRowsCount=worksSheet.getPhysicalNumberOfRows();
-        List<Map<String,String>> excelRows= new ArrayList<Map<String,String>>();
-        List<String> headersList= new ArrayList<>();
-
-        //fetch all headers in list
-        XSSFRow  headerRow=worksSheet.getRow(0);
-        int cellCount=headerRow.getPhysicalNumberOfCells();
-
-        for(int cellIndex=0;cellIndex<cellCount;cellIndex++) {
-            XSSFCell  cell=headerRow.getCell(cellIndex);
-            headersList.add(cell.getStringCellValue());
-        }
-        //fetch cell corresponding to those headers
-        for(int rowIndex=1;rowIndex<totalRowsCount;rowIndex++) {
-            Map<String,String> keyValueMap= new HashMap<>();
-            for(int columnIndex=0;columnIndex<headersList.size();columnIndex++) {
-                String cellValue=worksSheet.getRow(rowIndex).getCell(columnIndex).getStringCellValue();
-                String cellHeader=headersList.get(columnIndex);
-                keyValueMap.put(cellHeader, cellValue);
-            }
-            excelRows.add(keyValueMap);
-        }
-        return excelRows;
+        Map<String,List<Map<String,String>>> notationMappedRows= new HashMap<>();;
+ 
+        List<String> notations = new ArrayList<String>();
+		boolean skipFirstRow = true;
+		for (Row row : worksSheet) {
+			if (skipFirstRow) { skipFirstRow = false; continue; }
+			Cell cell = row.getCell(0);
+			if (cell != null) {
+				String notation = cell.getStringCellValue();
+				if (notation != null && !notation.isEmpty()) {
+					if (! notations.contains(notation)) {
+						notations.add(notation);
+					}
+				}
+			}
+		}
+		
+		int columnCount = 0;
+		List<String> attributes = new ArrayList<String>();
+		for (Iterator<Cell> ite = worksSheet.getRow(0).cellIterator(); 
+													ite.hasNext();) {
+			Cell cell = ite.next();
+			if (Cell.CELL_TYPE_BLANK != cell.getCellType()) {
+				attributes.add(cell.getStringCellValue());
+				++columnCount;
+			}
+		}
+		attributes.remove(0);
+        
+		for (String notation : notations) {
+			 List<Map<String,String>> excelRows= null;
+			if (notationMappedRows.containsKey(notation)) {
+				excelRows = notationMappedRows.get(notation);
+			} else {
+				excelRows = new ArrayList<Map<String, String>>();
+				notationMappedRows.put(notation, excelRows);
+			}
+			skipFirstRow = true;
+			for (Row row : worksSheet) {
+				if (skipFirstRow) { skipFirstRow = false; continue; }
+				List<Cell> data = new ArrayList<Cell>();
+				
+				for (int j = 0; j < columnCount; j++) {
+					Cell cell = row.getCell(j);
+					data.add(cell);
+				}
+				if (data.size() > 0) {
+					Map<String, String> keyValueRow = 
+						new HashMap<String, String>();
+					Cell notationCell = data.get(0);
+					if (notationCell != null) {
+						String cellNotation = notationCell
+											.getStringCellValue();
+						if (notation.equals(cellNotation)) {
+							for (int j = 1; j < data.size(); j++) {
+								String fKey = attributes.get(j - 1);
+								String fValue = data.get(j).getStringCellValue();
+								keyValueRow.put(fKey, fValue);
+							}
+							excelRows.add(keyValueRow);
+						}	
+					}
+				}
+			}
+		}     
+        return notationMappedRows;
     }
+    
 }
