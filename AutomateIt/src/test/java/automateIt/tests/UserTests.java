@@ -16,7 +16,7 @@ public class UserTests extends BaseTest{
 	AccountPage accountPage=null;
 	AdminPage adminPage=null;
 	
-	@BeforeClass
+	@BeforeClass (alwaysRun = true)
 	private void setPageObjects(){
         accountPage=new AccountPage(driver);
         adminPage=new AdminPage(driver);
@@ -39,21 +39,16 @@ public class UserTests extends BaseTest{
 	 
 	 
 	 @Test(description = "To verify user can be searched from UI",dataProvider = "searchUserDataProvider",
-			 dataProviderClass = UserDataProvider.class)
+			 dataProviderClass = UserDataProvider.class,groups = {"smoke-tests"})
 	    public void testSearchUser(AdminUserBean adminUserBean) {
 		 log.info(adminUserBean.toString());
 	        accountPage.clickOnAdminTab();
-	        adminPage.searchSytemUsers(adminUserBean);
-	        assertTrue( adminPage.verifyUserLandedOnUsersearchPage(), "user could not navigated to search user page");
-	    
+	        adminPage.isSytemUsersExists(adminUserBean);
+	        assertTrue( adminPage.isSytemUsersExists(adminUserBean), "user could not be found in search user page");    
 	        try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 	    }
-	
-	
-	
-
 }

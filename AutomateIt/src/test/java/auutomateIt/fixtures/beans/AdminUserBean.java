@@ -17,44 +17,30 @@ public class AdminUserBean {
         this.password = password;
         this.confirmPassword = confirmPassword;
     }
-    
-    
-
+     
     public String getUserRole() {
 		return userRole;
 	}
-
-
 
 	public String getEmployeeName() {
 		return employeeName;
 	}
 
-
-
 	public String getUserName() {
 		return userName;
 	}
-
-
 
 	public String getStatus() {
 		return status;
 	}
 
-
-
 	public String getPassword() {
 		return password;
 	}
 
-
-
 	public String getConfirmPassword() {
 		return confirmPassword;
 	}
-
-
 
 	@Override
     public String toString() {

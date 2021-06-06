@@ -96,7 +96,9 @@ public class ExcelReader {
 						if (notation.equals(cellNotation)) {
 							for (int j = 1; j < data.size(); j++) {
 								String fKey = attributes.get(j - 1);
-								String fValue = data.get(j).getStringCellValue();
+								String fValue=null;
+								if(data.get(j)!=null)
+								fValue = data.get(j).getStringCellValue();
 								keyValueRow.put(fKey, fValue);
 							}
 							excelRows.add(keyValueRow);

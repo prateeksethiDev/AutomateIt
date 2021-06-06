@@ -14,7 +14,7 @@ public class LoginTests extends BaseTest {
     AccountPage accountPage=null;
     String appURL=null;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
      private void setPageObjects(){
         appURL= ReadPropertyFile.getProperty("appURL");
         loginPage= new LoginPage(driver);
@@ -22,7 +22,7 @@ public class LoginTests extends BaseTest {
     }
 
     @Test(description = "To verify user is able to login into application with valid credentials",dataProvider = "validUserLoginDataProvider",
-			 dataProviderClass = LoginDataProvider.class)
+			 dataProviderClass = LoginDataProvider.class,groups = {"smoke-tests"})
     public void testLogin(LoginUserBean loginUserBean) {
         loginPage.loadAppURL(appURL);
         loginPage.login(loginUserBean.getUsername(),loginUserBean.getPassword());

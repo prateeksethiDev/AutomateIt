@@ -1,7 +1,10 @@
 package automateIt.pages;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.remote.*;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import auutomateIt.fixtures.beans.AdminUserBean;
 
@@ -18,6 +21,8 @@ public class AdminPage extends BasePage{
     private By confirmPassword_txt=By.id("systemUser_confirmPassword");
     private By saveUser_btn=By.id("btnSave");
     private By searchUser_btn=By.id("searchBtn");
+    private By searchUserHeaderLabel=By.xpath("//table/thead/tr/th/a");
+    
 
     public AdminPage(RemoteWebDriver driver) {
         super(driver);
@@ -47,8 +52,28 @@ public class AdminPage extends BasePage{
 	}
 
 
-	public void searchSytemUsers(AdminUserBean adminUserBean) {
+	public boolean isSytemUsersExists(AdminUserBean adminUserBean) {
 		sendKeysToText(userNameSearch_txt,"username_searc_txt",adminUserBean.getUserName());
+		clickOnWebElement(searchUser_btn, "Search user Serach button");
+		return isUserExistsInUserGrid("Username",adminUserBean.getUserName());	
+	}
+	
+	public boolean isUserExistsInUserGrid(String colHeader, String colValue) {
+		int colIndex=0;
+		String actualCellValue=null;
+		List<WebElement>  listOfHeaders=getListOflements(searchUserHeaderLabel, colHeader);
+		for(int index=0;index<listOfHeaders.size();index++) {
+			if(listOfHeaders.get(index).getText().trim().equalsIgnoreCase(colHeader)) {
+				colIndex=index+2;
+				break;
+			}			
+		}
+		String searchUserCellValue=String.format("//table/tbody/tr/td[%d]/a", colIndex);
+		List<WebElement>  listOfCellValueElement=getListOflements(By.xpath(searchUserCellValue), colValue);
+		if(listOfCellValueElement.size()>0) {
+			actualCellValue=listOfCellValueElement.get(0).getText().trim();			
+		}
 		
+		return actualCellValue.equals(colValue);
 	}
 }

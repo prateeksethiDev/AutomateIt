@@ -41,6 +41,7 @@ public class PageActions {
             wait.until(
                 (d)->
                     d.findElement(locator).isDisplayed());
+            driver.findElement(locator).clear();
             driver.findElement(locator).sendKeys(valueToBeSent);
             //log success message in extent report
             ExtentFactory.getInstance().getExtent().log(Status.PASS, fieldName+" entered value as "+valueToBeSent+" is successful");
@@ -257,5 +258,21 @@ public class PageActions {
 
     protected String returnDynamicXpath(String stringToReplace,String stringWithReplace) {
         return String.format(stringToReplace, stringWithReplace);
+    }
+    
+    protected List<WebElement> getListOflements(By locator,String fieldName){
+    	List<WebElement> list=null;
+    	try{
+            wait.until(
+                (d)->
+                    d.findElement(locator));
+            list=driver.findElements(locator);
+            //log success message in extent report
+            ExtentFactory.getInstance().getExtent().log(Status.PASS, fieldName+" as list of webElements is found");
+        }catch(Exception e) {
+            //log failure message in extent report
+            ExtentFactory.getInstance().getExtent().log(Status.FAIL, fieldName+" as list of webElements is found due to "+e.getMessage());
+        }
+    	return list;
     }
 }
