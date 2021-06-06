@@ -1,6 +1,6 @@
 ## **AutomateIt**
 
-Test Automation Framework for Web applications using following technologies.
+Test Automation Framework for Web applications using following technologies.<br>
 [1] Selenium 3<br>
 [2] Java 8<br>
 [3] TestNG<br>
