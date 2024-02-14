@@ -1,6 +1,5 @@
 package automateIt.browser;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import java.io.File;
 import java.io.FileNotFoundException;

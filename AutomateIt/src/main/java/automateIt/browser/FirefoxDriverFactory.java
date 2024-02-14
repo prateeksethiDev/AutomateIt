@@ -1,6 +1,6 @@
 package automateIt.browser;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
@@ -21,7 +21,7 @@ public class FirefoxDriverFactory {
             cap.setCapability(CapabilityType.BROWSER_NAME,"firefox");
             driver = new RemoteWebDriver(new URL(hubURL), cap);
         } else {
-            WebDriverManager.firefoxdriver().setup();
+
             driver = new FirefoxDriver();
         }
        // driver.get(appURL);

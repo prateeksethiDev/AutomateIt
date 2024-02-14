@@ -1,6 +1,6 @@
 package automateIt.browser;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -15,7 +15,7 @@ public class ChromeDriverFactory  {
             if(remoteExecution){
                 driver= new RemoteWebDriver(new URL(hubURL),chromeOptions);
             }else{
-                WebDriverManager.chromedriver().setup();
+
                 driver= new ChromeDriver(chromeOptions);
                 driver.manage().window().maximize();
             }

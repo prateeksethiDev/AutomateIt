@@ -12,6 +12,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import java.time.Duration;
 import java.util.List;
 import java.util.function.Function;
 
@@ -23,7 +25,7 @@ public class PageActions {
 
     public PageActions(RemoteWebDriver driver) {
         this.driver=driver;
-        wait = new WebDriverWait(driver, TIMEOUT, POLLING);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10), Duration.ofSeconds(100));
     }
 
     protected WebElement locateElement(By locator){
@@ -160,7 +162,7 @@ public class PageActions {
 
     protected void assertConfirmationPopUp(String fieldName) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver,5);
+            WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
             wait.until(ExpectedConditions.alertIsPresent()).accept();
 
 
@@ -174,12 +176,12 @@ public class PageActions {
     }
 
     protected void waitElementToBeClickable(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver,5);
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
         wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
     protected void waitForElementToBeAccessible(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
         wait.until(new Function<WebDriver, WebElement>()
         {
             public WebElement apply(WebDriver driver)
@@ -190,11 +192,11 @@ public class PageActions {
     }
 
     protected void waitForElementToBeVisible(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
     protected void waitForElementIneVisible(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver,20);
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(20));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
 
@@ -212,7 +214,7 @@ public class PageActions {
 
     protected void assertWebElementPresent(By locator) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver,20);
+            WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(20));
             if(wait.until(ExpectedConditions.numberOfElementsToBe(locator, 1)).size()==1) {
                 //log success message in extent report
                 ExtentFactory.getInstance().getExtent().log(Status.PASS, "WebElement with locator: "+ locator+" present, validation is passed");
@@ -226,7 +228,7 @@ public class PageActions {
     protected String getTextFromElement(By locator) {
         String text="";
         try {
-            WebDriverWait wait = new WebDriverWait(driver,20);
+            WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(20));
             if(wait.until(ExpectedConditions.numberOfElementsToBe(locator, 1)).size()==1) {
                 text=driver.findElement(locator).getText();
                 //log success message in extent report
