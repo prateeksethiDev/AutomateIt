@@ -1,31 +1,34 @@
-## **AutomateIt**
+# AutomateIt
 
-Test Automation Framework for Web applications using following technologies.<br>
-[1] Selenium 3<br>
-[2] Java 8<br>
-[3] TestNG<br>
-[4] ExtentReport<br>
-[5] Apache Log4J<br>
-[6] Apache POI<br>
+AutomateIt is a test automation framework for web applications using the following technologies:
+- Selenium 4
+- Java 17
+- TestNG
+- ExtentReport
+- Apache Log4J
+- Apache POI
 
-**Description**<br>
-Supports execution of tests on Remote Grid Setup. Includes yaml manifest files for  Selenium Grid 3 setup on kubernetes cluster.
-This will enable QA to deploy Selenium to Kubernetes in a scalable fashion.
+## Description
+AutomateIt supports the execution of tests on a Remote Grid Setup. It includes YAML manifest files for setting up Selenium Grid 3 on a Kubernetes cluster. This enables QA to deploy Selenium to Kubernetes in a scalable fashion.
 
-**Prerequisites**<br>
-Assuming you have a working Kubernetes cluster and a properly configured kubectl client. See the Getting Started Guides for details.
-Your cluster nodes must have 4 CPU and 3 GB of RAM each, in order to work properly.
-You ca start with one master and one worker node.
+## Prerequisites
+- You need a working Kubernetes cluster and a properly configured kubectl client. Refer to the Getting Started Guides for details.
+- Each of your cluster nodes must have at least 4 CPUs and 3 GB of RAM to work properly. You can start with one master and one worker node.
+- All the YAML manifest files can be found under the project's `cluster-setup` directory.
 
-All the yaml manifest files can be found under project cluster-setup directory.
+### K8S Deployment
+K8S Deployment is used for setting up the Selenium hub.
 
->[1] K8S Deployment is used for setting up Selenium hub.<br>
->[2] K8S ReplicationController is used for setting up  chrome/firefox node.<br>
->[3] K8S Service of type NodePort is used to acccess Selenium Grid outside of cluster.<br>
+### K8S ReplicationController
+K8S ReplicationController is used for setting up the Chrome/Firefox node.
 
-**Pod Debugging**<br>
-Sometimes, we need to debug the flakyness of test during actual execution . This can be achieved by port forwarding from given pod.<br>
-The default VNC port is 5900, we have to do the port forwarding for this particular port to any external port. We ca also specify the IP address to listen on.
+### K8S Service
+A K8S Service of type NodePort is used to access the Selenium Grid outside of the cluster.
+
+## Pod Debugging
+Sometimes, it's necessary to debug the flakiness of tests during actual execution. This can be achieved by port forwarding from a given pod.
+The default VNC port is 5900. We can do port forwarding for this particular port to any external port. We can also specify the IP address to listen on.
+
 
 `kubectl port-forward --address 192.168.0.105 pod/selenium-rep-chrome-hgwc9 8888:5900`
 
