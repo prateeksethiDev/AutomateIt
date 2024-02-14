@@ -9,9 +9,9 @@ import org.openqa.selenium.support.How;
 
 public class LoginPage extends BasePage {
 
-    By email_address_txt= By.id("txtUsername");
-    By password_txt= By.id("txtPassword");
-    By signIn_btn= By.id("btnLogin");
+    By email_address_txt= By.name("username");
+    By password_txt= By.name("password");
+    By signIn_btn= By.xpath("//button[normalize-space()='Login']");
 
     public LoginPage(RemoteWebDriver driver) {
         super(driver);
